@@ -1,0 +1,452 @@
+SQL> set echo on
+SQL> set pause on
+SQL> set pages 30
+SQL> -- 1a. Display last name, first name, and department name for all employees not in department 40 or 50.
+SQL> SELECT ename, fname, dname from empbb02 JOIN infobb02 ON (empbb02.empno = infobb02.empno) JOIN deptbb02 ON (empbb02.deptno = deptbb02.deptno) where deptbb02.deptno NOT IN (40,50);
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+ENAME       FNAME      DNAME                                                    
+----------- ---------- --------                                                                                            
+musial      stan       outfield                                                
+gehrig      lou        infield                                                  
+minoso      orestes    infield                                                  
+sandberg    ryne       infield                                                  
+cey         ron        infield                                                  
+williams    ted        outfield                                                
+johnson     randy      pitcher                                                  
+brown       mordecai   pitcher                                                  
+mays        willie     outfield                                                
+mungo       van lingle pitcher                                                  
+
+
+                                  Report Done
+
+11 rows selected.
+
+SQL> 
+SQL> -- 1b. Make a relational algebra expression based on 1a.
+
+
+
+
+
+
+
+
+
+SQL> -- 2. Output lines for each department.
+SQL> SELECT dname ||' department dines at '|| restaurant ||' in '|| location from deptbb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+DNAME||'DEPARTMENTDINESAT'||RESTAURANT||'IN'||LOCATION                          
+---------------------------------------------------------------                
+infield department dines at Jade in Clairmont                                  
+outfield department dines at House of Pasta in Santee                          
+pitcher department dines at Crab Shack in Pacific Beach                        
+staff department dines at Burger King in Lakeside                              
+catchers department dines at Pinnacle Peak in Santee                            
+
+
+                                  Report Done
+
+SQL> 
+SQL> -- 3. Create a copy of empbb02 called tempbb02.
+SQL> CREATE TABLE tempbb02 AS select * FROM empbb02;
+
+Table created.
+
+SQL> select * from tempbb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO ENAME       POS          BOSS HIREDATE         SAL     DEPTNO INCENTIVES  
+----- ----------- ------------ ---- --------- ---------- ---------- ----------             
+712   rickey      gm                01-JAN-98      10000        40            
+735   lasorda     coach        712  10-JAN-98       2000        40            
+707   bochy       coach        712  11-JAN-98       2000        40            
+798   berra       coach        712  12-JAN-98       2000        40            
+782   musial      right field  707  01-FEB-98      42000        20            
+763   gehrig      first base   735  11-MAR-98      85000        10            
+777   minoso      shortstop    735  05-MAY-98      85000        10      6000  
+721   sandberg    second base  735  28-FEB-98      25000        10            
+788   cey         third base   735  10-JAN-99      15000        10      8000  
+720   williams    left field   707  05-JAN-99     150000        20            
+755   johnson     pitcher      798  08-NOV-98      50000        30            
+744   brown       pitcher      798  18-OCT-99      40000        30      4000  
+730   mays        center field 707  01-JAN-96     240000        20            
+799   mungo       pitcher      798  10-MAR-00      20000        30      12000  
+766   rodriguez   catcher      735  16-OCT-01     100000        50            
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> 
+SQL> -- 4. Using tempbb02, add to each employee salary his department number.
+SQL> UPDATE tempbb02 SET sal = sal + deptno;
+
+16 rows updated.
+
+SQL> select * from tempbb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO ENAME       POS          BOSS HIREDATE         SAL     DEPTNO INCENTIVES  
+----- ----------- ------------ ---- --------- ---------- ---------- ----------             
+712   rickey      gm                01-JAN-98      10040        40            
+735   lasorda     coach        712  10-JAN-98       2040        40            
+707   bochy       coach        712  11-JAN-98       2040        40            
+798   berra       coach        712  12-JAN-98       2040        40            
+782   musial      right field  707  01-FEB-98      42020        20            
+763   gehrig      first base   735  11-MAR-98      85010        10            
+777   minoso      shortstop    735  05-MAY-98      85010        10      6000  
+721   sandberg    second base  735  28-FEB-98      25010        10            
+788   cey         third base   735  10-JAN-99      15010        10      8000  
+720   williams    left field   707  05-JAN-99     150020        20            
+755   johnson     pitcher      798  08-NOV-98      50030        30            
+744   brown       pitcher      798  18-OCT-99      40030        30      4000  
+730   mays        center field 707  01-JAN-96     240020        20            
+799   mungo       pitcher      798  10-MAR-00      20030        30      12000  
+766   rodriguez   catcher      735  16-OCT-01     100050        50            
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> 
+SQL> -- 5. Using tempbb02, add to each employee salary his uniform number.
+SQL> UPDATE tempbb02 SET tempbb02.sal = tempbb02.sal + (select uni from infobb02 where empno = tempbb02.empno);
+
+16 rows updated.
+
+SQL> select * from tempbb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO ENAME       POS          BOSS HIREDATE         SAL     DEPTNO INCENTIVES  
+----- ----------- ------------ ---- --------- ---------- ---------- ----------            
+712  rickey       gm                01-JAN-98      10096        40            
+735  lasorda      coach        712  10-JAN-98       2102        40            
+707  bochy        coach        712  11-JAN-98       2104        40            
+798  berra        coach        712  12-JAN-98       2106        40            
+782  musial       right field  707  01-FEB-98      42039        20            
+763  gehrig       first base   735  11-MAR-98      85024        10            
+777  minoso       shortstop    735  05-MAY-98      85037        10      6000  
+721  sandberg     second base  735  28-FEB-98      25027        10            
+788  cey          third base   735  10-JAN-99      15045        10      8000  
+720  williams     left field   707  05-JAN-99     150030        20            
+755  johnson      pitcher      798  08-NOV-98      50038        30            
+744  brown        pitcher      798  18-OCT-99      40055        30      4000  
+730  mays         center field 707  01-JAN-96     240032        20            
+799  mungo        pitcher      798  10-MAR-00      20061        30      12000  
+766  rodriguez    catcher      735  16-OCT-01     100054        50            
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> 
+SQL> -- 6. The boss is asking for last name, salary, and position of all employees making more than the highest paid pitcher.
+SQL> SELECT ename, sal, pos FROM empbb02 WHERE sal > ALL(select MAX(sal) FROM empbb02 WHERE deptno = 30);
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+ENAME              SAL POS                                                      
+----------- ---------- ------------                                            
+gehrig           85000 first base                                              
+minoso           85000 shortstop                                                
+williams        150000 left field                                              
+mays            240000 center field                                            
+rodriguez       100000 catcher                                                  
+
+
+
+                                  Report Done
+
+SQL> 
+SQL> -- 7a. Display each employee by name, with years and months of service.
+SQL> SELECT ename, (floor(months_between(sysdate,hiredate)/12)) YEARS, round((months_between(sysdate,hiredate)/12)-12) MONTHS from empbb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+ENAME            YEARS    MONTHS                                              
+----------- ---------- ----------                                                                                           
+rickey              17          6                                              
+lasorda             17          6                                              
+bochy               17          6                                              
+berra               17          6                                              
+musial              17          5                                              
+gehrig              17          5                                              
+minoso              17          5                                              
+sandberg            17          5                                              
+cey                 16          5                                              
+williams            16          5                                              
+johnson             16          5                                              
+brown               15          4                                              
+mays                19          8                                              
+mungo               15          3                                              
+rodriguez           13          2                                              
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> 
+SQL> 
+SQL> --7b. Add Jackie Robinson to the team, using empbb02 and infobb02.
+SQL> INSERT INTO empbb02 values ('729', 'robinson', 'second base', '712', '15-APR-1947', 50000, 10, null);
+
+1 row created. 
+
+
+SQL> select * from empbb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO ENAME       POS          BOSS HIREDATE         SAL     DEPTNO INCENTIVES  
+----- ----------- ------------ ---- --------- ---------- ---------- ----------  
+729  robinson     second base  712  15-APR-47      50000        10            
+712  rickey       gm                01-JAN-98      10000        40            
+735  lasorda      coach        712  10-JAN-98       2000        40            
+707  bochy        coach        712  11-JAN-98       2000        40            
+798  berra        coach        712  12-JAN-98       2000        40            
+782  musial       right field  707  01-FEB-98      42000        20            
+763  gehrig       first base   735  11-MAR-98      85000        10            
+777  minoso       shortstop    735  05-MAY-98      85000        10      6000  
+721  sandberg     second base  735  28-FEB-98      25000        10            
+788  cey          third base   735  10-JAN-99      15000        10      8000  
+720  williams     left field   707  05-JAN-99     150000        20            
+755  johnson      pitcher      798  08-NOV-98      50000        30            
+744  brown        pitcher      798  18-OCT-99      40000        30      4000  
+730  mays         center field 707  01-JAN-96     240000        20            
+799  mungo        pitcher      798  10-MAR-00      20000        30      12000  
+766  rodriguez    catcher      735  16-OCT-01     100000        50            
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> INSERT INTO infobb02 VALUES ('729', 'jack', 'jackie', '42', 311, null);
+INSERT INTO infobb02 VALUES ('729', 'jack', 'jackie', '42', 311, null)
+
+1 row created. 
+
+
+SQL> select * from infobb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO FNAME      NICK            UNI    AVERAGE        ERA                    
+----- ---------- --------------- ---- ---------- ----------                    
+729   jack       jackie          42          311                                
+712   branch                     56                                            
+735   tommy                      62                                            
+707   bruce                      64          220                                
+777   orestes    minnie          27          270        32                    
+763   lou        iron horse      14          350                                
+782   stan       the man         19          342                                
+798   larry      yogi            66          290                                
+788   ron        penguin         35          287                                
+730   willie     say hey kid     12          335                                
+755   randy      the big unit    8           123      2.15                    
+744   mordecai   3 fingers       25          168      3.27                    
+721   ryne       rhino           17          294                                
+799   van lingle                 31          230      2.82                    
+720   ted        teddy ballgame  10          350                                
+766   ivan       pudge           4           339                                
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> 
+SQL> -- 8. Add "spouse" column to infobb02. Make value NA for each employee except Jackie Robinson. Then add Jackie Robinson's wife to the table.
+SQL> ALTER TABLE infobb02 ADD spouse VARCHAR2(10);
+
+Table altered.
+
+SQL> UPDATE infobb02 SET spouse = 'NA' WHERE fname <> 'jack';
+
+15 rows updated.
+
+SQL> UPDATE infobb02 SET spouse = 'rachel' WHERE fname = 'jack';
+
+1 row updated.
+
+SQL> select * from infobb02;
+
+Tue Jul 21                                                            page    1
+
+
+
+
+
+
+
+
+
+
+                                    LAB 3 
+                                    CS 514
+
+EMPNO FNAME      NICK            UNI    AVERAGE        ERA  SPOUSE              
+----- ---------- --------------- ---- ---------- ---------- ----------          
+729   jack       jackie          42          311            rachel              
+712   branch                     56                         NA                  
+735   tommy                      62                         NA                  
+707   bruce                      64          220            NA                  
+777   orestes    minnie          27          270        32  NA                  
+763   lou        iron horse      14          350            NA                  
+782   stan       the man         19          342            NA                  
+798   larry      yogi            66          290            NA                  
+788   ron        penguin         35          287            NA                  
+730   willie     say hey kid     12          335            NA                  
+755   randy      the big unit    8           123      2.15  NA                  
+744   mordecai   3 fingers       25          168      3.27  NA                  
+721   ryne       rhino           17          294            NA                  
+799   van lingle                 31          230      2.82  NA                  
+720   ted        teddy ballgame  10          350            NA                  
+766   ivan       pudge           4           339            NA                  
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> 
+SQL> -- 9. Change new column name to "wife" and remove new column.
+SQL> ALTER TABLE infobb02 RENAME COLUMN spouse to wife;
+
+Table altered.
+
+SQL> select * from infobb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO FNAME      NICK            UNI    AVERAGE        ERA  WIFE                
+----- ---------- --------------- ---- ---------- ---------- ----------          
+729   jack       jackie          42          311            rachel              
+712  branch                      56                         NA                  
+735  tommy                       62                         NA                  
+707  bruce                       64          220            NA                  
+777  orestes     minnie          27          270        32  NA                  
+763  lou         iron horse      14          350            NA                  
+782  stan        the man         19          342            NA                  
+798  larry       yogi            66          290            NA                  
+788  ron         penguin         35          287            NA                  
+730  willie      say hey kid     12          335            NA                  
+755  randy       the big unit    8           123      2.15  NA                  
+744  mordecai    3 fingers       25          168      3.27  NA                  
+721  ryne        rhino           17          294            NA                  
+799  van lingle                  31          230      2.82  NA                  
+720  ted         teddy ballgame  10          350            NA                  
+766  ivan        pudge           4           339            NA                  
+
+
+
+
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> ALTER TABLE infobb02 DROP COLUMN wife;
+
+Table altered.
+
+SQL> select * from infobb02;
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO FNAME      NICK            UNI    AVERAGE        ERA                    
+----- ---------- --------------- ---- ---------- ----------                    
+729   jack       jackie          42          311                                
+712   branch                     56                                            
+735   tommy                      62                                            
+707   bruce                      64          220                                
+777   orestes    minnie          27          270        32                    
+763   lou        iron horse      14          350                                
+782   stan       the man         19          342                                
+798   larry      yogi            66          290                                
+788   ron        penguin         35          287                                
+730   willie     say hey kid     12          335                                
+755   randy      the big unit    8           123      2.15                    
+744   mordecai   3 fingers       25          168      3.27                    
+721   ryne       rhino           17          294                                
+799   van lingle                 31          230      2.82                    
+720   ted        teddy ballgame  10          350                                
+766   ivan       pudge           4           339                                
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> /
+
+Tue Jul 21                                                            page    1
+                                    LAB 3 
+                                    CS 514
+
+EMPNO FNAME      NICK            UNI    AVERAGE        ERA                    
+----- ---------- --------------- ---- ---------- ----------                    
+729   jack       jackie          42          311                                
+712   branch                     56                                            
+735   tommy                      62                                            
+707   bruce                      64          220                                
+777   orestes    minnie          27          270        32                    
+763   lou        iron horse      14          350                                
+782   stan       the man         19          342                                
+798   larry      yogi            66          290                                
+788   ron        penguin         35          287                                
+730   willie     say hey kid     12          335                                
+755   randy      the big unit    8           123      2.15                    
+744   mordecai   3 fingers       25          168      3.27                    
+721   ryne       rhino           17          294                                
+799   van lingle                 31          230      2.82                    
+720   ted        teddy ballgame  10          350                                
+766   ivan       pudge           4           339                                
+
+
+
+                                  Report Done
+16 rows selected.
+
+SQL> quit
