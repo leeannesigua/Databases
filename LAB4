@@ -1,0 +1,435 @@
+Lee Anne Sigua
+masc1105
+
+PART I
+
+SQL> set pause on
+SQL> set pages 30
+SQL> desc blobclob;
+Name                                      Null?    Type
+----------------------------------------- -------- ----------------------------
+CLOBID                                            NUMBER
+CLOB_COL                                          CLOB
+BLOB_COL                                          BLOB
+
+SQL> set long 30000;
+SQL> SELECT clobid, clob_col from blobclob;
+
+Mon Jul 27                                                            page    1
+                                    LAB 4 
+                                    CS 514
+
+    CLOBID                                                                      
+----------                                                                      
+CLOB_COL                                                                        
+--------------------------------------------------------------------------------
+        1                                                                      
+"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife."                                        
+                                                                                
+        2                                                                      
+"It was the best of times, it was the worst of times, it was the age of wisdom, 
+it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way--in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only."                        
+                                                                                
+        3                                                                      
+"Dean: Today you will have the honor of playing one of the greatest games ever invented. A game of skill, agility, cunning. A game with one simple rule. Dodge."
+                                                                                
+
+
+                                  Report Done
+
+SQL> set spool off
+SP2-0158: unknown SET option "spool"
+SQL> 
+SQL> quit
+
+
+
+
+
+
+PART II
+
+1. SQL code to make the cdv files
+
+a. code for empbb02.csv
+
+SQL> spool empbb02.csv
+SQL> select empno||','||ename||','||pos||','||boss||','||hiredate||','||sal||','||deptno||','||incentives from empbb02;
+
+EMPNO||','||ENAME||','||POS||','||BOSS||','||HIREDATE||','||SAL||','||DEPTNO||',
+--------------------------------------------------------------------------------
+729,robinson,second base,712,15-APR-47,50000,10,                                
+712,rickey,gm,,01-JAN-98,10000,40,                                              
+735,lasorda,coach,712,10-JAN-98,2000,40,                                        
+707,bochy,coach,712,11-JAN-98,2000,40,                                          
+798,berra,coach,712,12-JAN-98,2000,40,                                          
+782,musial,right field,707,01-FEB-98,42000,20,                                  
+763,gehrig,first base,735,11-MAR-98,85000,10,                                   
+777,minoso,shortstop,735,05-MAY-98,85000,10,6000                                
+721,sandberg,second base,735,28-FEB-98,25000,10,                                
+788,cey,third base,735,10-JAN-99,15000,10,8000                                  
+720,williams,left field,707,05-JAN-99,150000,20,                                
+
+EMPNO||','||ENAME||','||POS||','||BOSS||','||HIREDATE||','||SAL||','||DEPTNO||',
+--------------------------------------------------------------------------------
+755,johnson,pitcher,798,08-NOV-98,50000,30,                                     
+744,brown,pitcher,798,18-OCT-99,40000,30,4000                                   
+730,mays,center field,707,01-JAN-96,240000,20,                                  
+799,mungo,pitcher,798,10-MAR-00,20000,30,12000                                  
+766,rodriguez,catcher,735,16-OCT-01,100000,50,                                  
+
+16 rows selected.
+
+SQL> spool off
+
+b. code for infobb02.csv
+
+SQL> spool infobb02.csv
+SQL> SELECT empno||','||fname||','||nick||','||uni||','||average||','||era from infobb02;
+
+EMPNO||','||FNAME||','||NICK||','||UNI||','||AVERAGE||','||ERA                  
+--------------------------------------------------------------------------------
+729,jack,jackie,42,311,                                                         
+712,branch,,56,,                                                                
+735,tommy,,62,,                                                                 
+707,bruce,,64,220,                                                              
+777,orestes,minnie,27,270,32                                                    
+763,lou,iron horse,14,350,                                                      
+782,stan,the man,19,342,                                                        
+798,larry,yogi,66,290,                                                          
+788,ron,penguin,35,287,                                                         
+730,willie,say hey kid,12,335,                                                  
+755,randy,the big unit,8,123,2.15                                               
+
+EMPNO||','||FNAME||','||NICK||','||UNI||','||AVERAGE||','||ERA                  
+--------------------------------------------------------------------------------
+744,mordecai,3 fingers,25,168,3.27                                              
+721,ryne,rhino,17,294,                                                          
+799,van lingle,,31,230,2.82                                                     
+720,ted,teddy ballgame,10,350,                                                  
+766,ivan,pudge,4,339,                                                           
+
+16 rows selected.
+
+SQL> spool off
+
+c. code for deptbb02.csv
+
+SQL> spool deptbb02.csv
+SQL> select deptno||','||dname||','||restaurant||','||location||','||motto from deptbb02;
+
+DEPTNO||','||DNAME||','||RESTAURANT||','||LOCATION||','||MOTTO                  
+--------------------------------------------------------------------------------
+10,infield,Jade,Clairmont,Let's play two!                                       
+20,outfield,House of Pasta,Santee,Alea iacta est                                
+30,pitcher,Crab Shack,Pacific Beach,Semper paratus                              
+40,staff,Burger King,Lakeside,Experentia docet                                  
+50,catchers,Pinnacle Peak,Santee,Non bastardi carborundum                       
+
+SQL> spool off
+
+d. code for salsbb02.csv
+
+SQL> spool salsbb02.csv
+SQL> select grade||','||role||','||losal||','||hisal from salsbb02;
+
+GRADE||','||ROLE||','||LOSAL||','||HISAL                                        
+--------------------------------------------------------------------------------
+1,staff,1000,5000                                                               
+2,staff,5001,10000                                                              
+1,hitter,5000,15000                                                             
+2,hitter,15001,50000                                                            
+3,hitter,50001,250000                                                           
+1,pitcher,5000,25000                                                            
+2,pitcher,25001,125000                                                          
+
+7 rows selected.
+
+SQL> spool off
+
+2. The cdv files themselves
+
+a. empbb02.csv
+
+729,robinson,second base,712,15-APR-47,50000,10,0                                
+712,rickey,gm,,01-JAN-98,10000,40,0                                              
+735,lasorda,coach,712,10-JAN-98,2000,40,0                                        
+707,bochy,coach,712,11-JAN-98,2000,40,0                                          
+798,berra,coach,712,12-JAN-98,2000,40,0                                          
+782,musial,right field,707,01-FEB-98,42000,20,0                                  
+763,gehrig,first base,735,11-MAR-98,85000,10,0                                   
+777,minoso,shortstop,735,05-MAY-98,85000,10,6000                                
+721,sandberg,second base,735,28-FEB-98,25000,10,0                                
+788,cey,third base,735,10-JAN-99,15000,10,8000                                  
+720,williams,left field,707,05-JAN-99,150000,20,0                                
+755,johnson,pitcher,798,08-NOV-98,50000,30,0                                     
+744,brown,pitcher,798,18-OCT-99,40000,30,4000                                   
+730,mays,center field,707,01-JAN-96,240000,20,0                                  
+799,mungo,pitcher,798,10-MAR-00,20000,30,12000                                  
+766,rodriguez,catcher,735,16-OCT-01,100000,50,0
+
+b. infobbo2.csv
+
+729,jack,jackie,42,311,0                                                         
+712,branch,,56,,0                                                                
+735,tommy,,62,,0                                                                 
+707,bruce,,64,220,0                                                              
+777,orestes,minnie,27,270,32                                                    
+763,lou,iron horse,14,350,0                                                      
+782,stan,the man,19,342,0                                                        
+798,larry,yogi,66,290,0                                                          
+788,ron,penguin,35,287,0                                                         
+730,willie,say hey kid,12,335,0                                                  
+755,randy,the big unit,8,123,2.15                                               
+744,mordecai,3 fingers,25,168,3.27                                              
+721,ryne,rhino,17,294,0                                                          
+799,van lingle,,31,230,2.82                                                     
+720,ted,teddy ballgame,10,350,0                                                  
+766,ivan,pudge,4,339,0                                                           
+
+c. deptbb02.csv
+
+10,infield,Jade,Clairmont,Let's play two!
+20,outfield,House of Pasta,Santee,Alea iacta est
+30,pitcher,Crab Shack,Pacific Beach,Semper paratus
+40,staff,Burger King,Lakeside,Experentia docet
+50,catchers,Pinnacle Peak,Santee,Non bastardi carborundum
+
+d. salsbb02.csv
+
+1,staff,1000,5000                                                               
+2,staff,5001,10000                                                              
+1,hitter,5000,15000                                                             
+2,hitter,15001,50000                                                            
+3,hitter,50001,250000                                                           
+1,pitcher,5000,25000                                                            
+2,pitcher,25001,125000
+
+3. The 4 control files
+
+a. control file for empbb02 table (loademp.ctl)
+load data
+  infile empbb02.csv
+  replace into table empbb02
+  fields terminated by ','
+  (empno,ename,pos,boss,hiredate,sal,deptno,incentives)
+
+b. control file for infobb02 table (loadinfo.ctl)
+load data
+  infile infobb02.csv
+  replace into table infobb02
+  fields terminated by ','
+  (empno, fname, nick, uni, average, era)
+
+c. control file for deptbb02 table (loaddept.ctl)
+load data
+  infile deptbb02.csv
+  replace into table deptbb02
+  fields terminated by ','
+ (deptno, dname, restaurant, location, motto)
+
+d. control file for salsbb02 table (loadsals.ctl)
+load data
+  infile salsbb02.csv
+  replace into table salsbb02
+  fields terminated by ','
+  (grade, role, losal, hisal)
+
+4. The code to run sqlldr 4 times to fill tables
+
+a. sqlldr code to fill empbb02 tables
+sqlldr st109/cs514@cfedb.sdsu.edu control=loademp.ctl
+
+b. sqlldr code to fill infobb02 tables
+sqlldr st109/cs514@cfedb.sdsu.edu control=loadinfo.ctl
+
+c. sqlldr code to fill deptbb02 tables
+sqlldr st109/cs514@cfedb.sdsu.edu control=loaddept.ctl
+
+d. sqlldr code to fill salsbb02 tables
+sqlldr st109/cs514@cfedb.sdsu.edu control=loadsals.ctl
+
+5. A spool file showing your entering the right schema, and then doing desc, and select * for all 4 tables.
+
+SQL> set pause on
+SQL> set pages 30
+SQL> SHOW USER
+USER is "ST109"
+SQL> desc empbb02
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL VARCHAR2(5)
+ ENAME                                     NOT NULL VARCHAR2(10)
+ POS                                                VARCHAR2(12)
+ BOSS                                               VARCHAR2(4)
+ HIREDATE                                           DATE
+ SAL                                                NUMBER(6)
+ DEPTNO                                             NUMBER(2)
+ INCENTIVES                                         NUMBER(6)
+
+SQL> select * from empbb02;
+
+Tue Jul 28                                                             page    1
+                                     LAB 4 
+                                     CS 514
+
+EMPNO ENAME      POS          BOSS HIREDATE         SAL     DEPTNO INCENTIVES   
+----- ---------- ------------ ---- --------- ---------- ---------- ----------   
+729   robinson   second base  712  15-APR-47      50000         10              
+712   rickey     gm                01-JAN-98      10000         40              
+735   lasorda    coach        712  10-JAN-98       2000         40              
+707   bochy      coach        712  11-JAN-98       2000         40              
+798   berra      coach        712  12-JAN-98       2000         40              
+782   musial     right field  707  01-FEB-98      42000         20              
+763   gehrig     first base   735  11-MAR-98      85000         10              
+777   minoso     shortstop    735  05-MAY-98      85000         10       6000   
+721   sandberg   second base  735  28-FEB-98      25000         10              
+788   cey        third base   735  10-JAN-99      15000         10       8000   
+720   williams   left field   707  05-JAN-99     150000         20              
+755   johnson    pitcher      798  08-NOV-98      50000         30              
+744   brown      pitcher      798  18-OCT-99      40000         30              
+730   mays       center field 707  01-JAN-96     240000         20              
+799   mungo      pitcher      798  10-MAR-00      20000         30      12000   
+766   rodriguez  catcher      735  16-OCT-01     100000         50              
+
+
+
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> SHOW USER
+USER is "ST109"
+SQL> desc infobb02
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL VARCHAR2(5)
+ FNAME                                              VARCHAR2(10)
+ NICK                                               VARCHAR2(15)
+ UNI                                                VARCHAR2(4)
+ AVERAGE                                            NUMBER(4)
+ ERA                                                NUMBER(6,3)
+
+SQL> select * from infobb02;
+
+Tue Jul 28                                                             page    1
+                                     LAB 4 
+                                     CS 514
+
+EMPNO FNAME      NICK            UNI     AVERAGE        ERA                     
+----- ---------- --------------- ---- ---------- ----------                     
+729   jack       jackie          42          311                                
+712   branch                     56                                             
+735   tommy                      62                                             
+707   bruce                      64          220                                
+777   orestes    minnie          27          270         32                     
+763   lou        iron horse      14          350                                
+782   stan       the man         19          342                                
+798   larry      yogi            66          290                                
+788   ron        penguin         35          287                                
+730   willie     say hey kid     12          335                                
+755   randy      the big unit    8           123       2.15                     
+744   mordecai   3 fingers       25          168       3.27                     
+721   ryne       rhino           17          294                                
+799   van lingle                 31          230                                
+720   ted        teddy ballgame  10          350                                
+766   ivan       pudge           4           339                                
+
+
+
+
+
+
+                                  Report Done
+
+16 rows selected.
+
+SQL> SHOW USER
+USER is "ST109"
+SQL> desc deptbb02
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNO                                    NOT NULL NUMBER(3)
+ DNAME                                              VARCHAR2(8)
+ RESTAURANT                                         VARCHAR2(15)
+ LOCATION                                           VARCHAR2(15)
+ MOTTO                                              VARCHAR2(28)
+
+SQL> select * from deptbb02;
+
+Tue Jul 28                                                             page    1
+                                     LAB 4 
+                                     CS 514
+
+    
+    DEPTNO DNAME    RESTAURANT      LOCATION        MOTTO                       
+---------- -------- --------------- --------------- ----------------------------
+        10 infield  Jade            Clairmont       Let's play two!             
+        20 outfield House of Pasta  Santee          Alea iacta est              
+        30 pitcher  Crab Shack      Pacific Beach   Semper paratus              
+        40 staff    Burger King     Lakeside        Experentia docet            
+        50 catchers Pinnacle Peak   Santee          Non bastardi carborundum    
+                   
+                                                                                
+
+
+
+
+
+                                  Report Done
+
+SQL> SHOW USER
+USER is "ST109"
+SQL> desc salsbb02
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ GRADE                                     NOT NULL NUMBER(2)
+ ROLE                                      NOT NULL VARCHAR2(8)
+ LOSAL                                              NUMBER(6)
+ HISAL                                              NUMBER(6)
+
+SQL> select * from salsbb02;
+
+Tue Jul 28                                                             page    1
+                                     LAB 4 
+                                     CS 514
+
+     GRADE ROLE          LOSAL      HISAL                                       
+---------- -------- ---------- ----------                                       
+         1 staff          1000       5000                                       
+         2 staff          5001      10000                                       
+         1 hitter         5000      15000                                       
+         2 hitter        15001      50000                                       
+         3 hitter        50001     250000                                       
+         1 pitcher        5000      25000                                       
+         2 pitcher       25001     125000                                       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  Report Done
+
+7 rows selected.
+
+SQL> spool off
+
+
+
+
+
+
+   
