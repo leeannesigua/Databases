@@ -1,0 +1,221 @@
+Lee Anne Sigua
+CS 514
+masc1105 st09
+
+SQL> set pause on
+SQL> set pages 30
+SQL> -- 1. Display user_constraints for empno and deptno
+SQL> SELECT owner, constraint_name, constraint_type, search_condition FROM user_constraints WHERE table_name = 'EMPBB02';
+
+Tue Jul 14                                                            page    1
+                                    Lab 2 
+                                    CS 514
+
+OWNER                          CONSTRAINT_NAME                C                
+------------------------------ ------------------------------ -                
+SEARCH_CONDITION                                                                
+--------------------------------------------------------------------------------
+ST09                          EMPBB02_EMPNO_PK                P                
+                                                                                
+                                                                                
+ST09                          SYS_C00160448                   C                
+"ENAME" IS NOT NULL                                                            
+                                                                                
+ST09                          DEPTBB02_EMPBB02_FK             R                
+                                                                                
+                                                                                
+ST09                          EMPBB02_ENAME_CK                C                
+ename NOT LIKE 'q%'                                                            
+                                                                                
+
+
+
+
+
+
+                                  Report Done
+
+SQL> desc empbb02;
+Name                                      Null?    Type
+----------------------------------------- -------- ----------------------------
+EMPNO                                     NOT NULL VARCHAR2(5)
+ENAME                                     NOT NULL VARCHAR2(11)
+POS                                                VARCHAR2(12)
+BOSS                                               VARCHAR2(4)
+HIREDATE                                           DATE
+SAL                                                NUMBER(6)
+DEPTNO                                             NUMBER(2)
+INCENTIVES                                         NUMBER(6)
+
+SQL> SELECT owner, constraint_name, constraint_type, search_condition FROM user_constraints WHERE table_name = 'INFOBB02';
+
+Tue Jul 14                                                            page    1
+                                    Lab 2 
+                                    CS 514
+
+OWNER                          CONSTRAINT_NAME                C                
+------------------------------ ------------------------------ -                
+SEARCH_CONDITION                                                                
+--------------------------------------------------------------------------------
+ST09                           INFOBB02_EMPNO_PK              P                
+                                                                                
+                                                                                
+ST09                           EMPBB02_INFOBB02_FK            R                
+                                                                                
+                                                                                
+
+
+
+
+
+
+                                  Report Done
+
+SQL> desc infobb02;
+Name                                      Null?    Type
+----------------------------------------- -------- ----------------------------
+EMPNO                                     NOT NULL VARCHAR2(5)
+FNAME                                              VARCHAR2(10)
+NICK                                               VARCHAR2(15)
+UNI                                                VARCHAR2(4)
+AVERAGE                                            NUMBER(4)
+ERA                                                NUMBER(6,3)
+
+SQL> SELECT owner, constraint_name, constraint_type, search_condition FROM user_constraints WHERE table_name = 'DEPTBB02';
+
+Tue Jul 14                                                            page    1
+                                    Lab 2 
+                                    CS 514
+
+OWNER                          CONSTRAINT_NAME                C                
+------------------------------ ------------------------------ -                
+SEARCH_CONDITION                                                                
+--------------------------------------------------------------------------------
+ST09                           DEPTBB02_DEPTNO_PK             P                
+                                                                                
+                                                                                
+ST09                           DEPTBB02_DNAME_UK              U                
+                                                                                
+                                                                                
+
+
+
+
+
+
+
+
+
+                                  Report Done
+
+SQL> desc deptbb02;
+Name                                      Null?    Type
+----------------------------------------- -------- ----------------------------
+DEPTNO                                    NOT NULL NUMBER(3)
+DNAME                                              VARCHAR2(8)
+RESTAURANT                                         VARCHAR2(15)
+LOCATION                                           VARCHAR2(15)
+MOTTO                                              VARCHAR2(28)
+
+SQL> -- 2. Test Primary Constraint for deptno by entering a row with null for deptno in deptbb02
+SQL> INSERT INTO deptbb02 VALUES (null, 'outfield', 'The Shack', 'Miramar', 'Get your grub on');
+INSERT INTO deptbb02 VALUES (null, 'outfield', 'The Shack', 'Miramar', 'Get your grub on')
+                            *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("ST09"."DEPTBB02"."DEPTNO") 
+
+
+SQL> -- 3. Display user_constraints for salsbb02
+SQL> SELECT owner, constraint_name, constraint_type, search_condition FROM user_constraints WHERE table_name = 'SALSBB02';
+
+Tue Jul 14                                                            page    1
+                                    Lab 2 
+                                    CS 514
+
+OWNER                          CONSTRAINT_NAME                C                
+------------------------------ ------------------------------ -                
+SEARCH_CONDITION                                                                
+--------------------------------------------------------------------------------
+ST09                           PK_SALSBB02                    P                
+                                                                                
+                                                                                
+
+
+
+
+
+
+
+
+
+
+
+                                  Report Done
+
+SQL> desc salsbb02;
+Name                                      Null?    Type
+----------------------------------------- -------- ----------------------------
+GRADE                                     NOT NULL NUMBER(2)
+ROLE                                      NOT NULL VARCHAR2(8)
+LOSAL                                              NUMBER(6)
+HISAL                                              NUMBER(6)
+
+SQL> -- 4. Display deptbb02, make sure motto column does not wrap
+SQL> select * from deptbb02;
+
+Tue Jul 14                                                            page    1
+                                    Lab 2 
+                                    CS 514
+
+    DEPTNO DNAME    RESTAURANT      LOCATION        MOTTO                      
+---------- -------- --------------- --------------- ----------------------------
+        10 infield  Jade            Clairmont       Let's play two!            
+        20 outfield House of Pasta  Santee          Alea iacta est              
+        30 pitcher  Crab Shack      Pacific Beach   Semper paratus              
+        40 staff    Burger King     Lakeside        Experentia docet            
+        50 catchers Pinnacle Peak   Santee          Non bastardi carborundum    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  Report Done
+
+SQL> -- 5. Test Check Constraint. Try to 'hire' Dan Quiesenberry.
+SQL> INSERT INTO empbb02 VALUES ('738', 'Quisenberry', 'catcher', '735', '14-JUL-2003', 15000, 50, null);
+INSERT INTO empbb02 VALUES ('738', 'Quisenberry', 'catcher', '735', '14-JUL-2003', 15000, 50, null)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (ST09.EMPBB02_EMPNO_PK) violated 
+
+
+SQL> -- 6. In the terminology of foreign keys, you should not be alloed to drop a parent table, if it still has children. Verify this using your tables.
+SQL> DROP TABLE empbb02 PURGE;
+DROP TABLE empbb02 PURGE
+          *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys 
+
+
+SQL> DROP TABLE deptbb02 PURGE;
+DROP TABLE deptbb02 PURGE
+          *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys 
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> quit
